@@ -1,15 +1,17 @@
 //
 //  main.m
-//  AR
+//  OcvARBasic
 //
-//  Created by Jiyue Wang on 5/15/15.
-//  Copyright (c) 2015 Jiyue Wang. All rights reserved.
+//  Created by Markus Konrad on 19.06.14.
+//  Copyright (c) 2014 INKA Research Group. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
 #import "AppDelegate.h"
 
-int main(int argc, char * argv[]) {
+int main(int argc, char * argv[])
+{
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
