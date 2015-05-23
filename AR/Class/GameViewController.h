@@ -32,7 +32,7 @@ using namespace ocv_ar;
  * Main view controller.
  * Handles UI initialization and interactions.
  */
-@interface RootViewController : UIViewController<CvVideoCameraDelegate> {
+@interface GameViewController : UIViewController<CvVideoCameraDelegate> {
     CvVideoCamera *cam;     // for grabbing video frames
     
     UIView *baseView;       // root view
@@ -43,5 +43,6 @@ using namespace ocv_ar;
     
     BOOL useDistCoeff;      // use distortion coefficients in camera intrinsics?
 }
+
 
 @end

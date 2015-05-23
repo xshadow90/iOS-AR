@@ -15,14 +15,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.window.backgroundColor = [UIColor whiteColor];
 
     // add our custom view controller "RootViewController"
-    UIViewController *rootViewCtrl = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    [self.window setRootViewController:rootViewCtrl];
+//    UIViewController *rootViewCtrl = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+//    [self.window setRootViewController:rootViewCtr
+//    l];
+//    [self.window makeKeyAndVisible];
     
-    [self.window makeKeyAndVisible];
+//    UIViewController *rootViewCtrl = [[[EntryViewController alloc]initWithNibName:nil bundle:nil ]autorelease];
+//    [self.window setRootViewController:rootViewCtrl];
+//    [self.window makeKeyAndVisible];
     
     return YES;
 }

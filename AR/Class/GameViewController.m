@@ -9,9 +9,11 @@
  * BSD licensed (see LICENSE file).
  */
 
-#import "RootViewController.h"
+#import "GameViewController.h"
 
-@interface RootViewController(Private)
+static NSString* TAG = @"GameViewController";
+
+@interface GameViewController(Private)
 /**
  * initialize camera
  */
@@ -39,12 +41,13 @@
 @end
 
 
-@implementation RootViewController
+@implementation GameViewController
 
 #pragma mark init/dealloc
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    NSLog(@"%@: start initialling", TAG);
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         useDistCoeff = USE_DIST_COEFF;
@@ -53,7 +56,7 @@
                               MARKER_REAL_SIZE_M,   // real marker size in meters
                               PROJ_FLIP_MODE);      // projection flip mode
     }
-    
+    NSLog(@"%@: end initialling", TAG);
     return self;
 }
 
@@ -73,7 +76,7 @@
 #pragma mark parent methods
 
 - (void)didReceiveMemoryWarning {
-    NSLog(@"memory warning!!!");
+    NSLog(@"%@: memory warning!!!", TAG);
     
     [super didReceiveMemoryWarning];
 }
@@ -81,7 +84,7 @@
 - (void)loadView {
     const CGRect screenRect = [[UIScreen mainScreen] bounds];
     
-    NSLog(@"loading view of size %dx%d", (int)screenRect.size.width, (int)screenRect.size.height);
+    NSLog(@"%@: loading view of size %dx%d", TAG, (int)screenRect.size.width, (int)screenRect.size.height);
     
     // create an empty base view
     baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenRect.size.height, screenRect.size.width)];
@@ -95,6 +98,7 @@
     [baseView addSubview:glView];
     
     // set a list of buttons for processing output display
+    // TODO
     NSArray *btnTitles = [NSArray arrayWithObjects:
                           @"Normal",
                           @"Preproc",
@@ -127,9 +131,9 @@
     
     // init detector
     if ([self initDetector]) {
-        NSLog(@"cam intrinsics loaded from file %@", CAM_INTRINSICS_FILE);
+        NSLog(@"%@: cam intrinsics loaded from file %@", TAG, CAM_INTRINSICS_FILE);
     } else {
-        NSLog(@"detector initialization failure");
+        NSLog(@"%@: detector initialization failure", TAG);
     }
     
     // set the marker scale for the GL view
@@ -139,7 +143,7 @@
     [self initCam];
     [cam start];
     
-    NSLog(@"cam loaded: %d", cam.captureSessionLoaded);
+    NSLog(@"%@: cam loaded: %d", TAG, cam.captureSessionLoaded);
 }
 
 #pragma mark CvVideoCameraDelegate methods
@@ -220,14 +224,14 @@
                         cStringUsingEncoding:NSASCIIStringEncoding];
     
     if (!path) {
-        NSLog(@"could not find cam intrinsics file %@", CAM_INTRINSICS_FILE);
+        NSLog(@"%@: could not find cam intrinsics file %@", TAG, CAM_INTRINSICS_FILE);
         return NO;
     }
     
     fs.open(path, FileStorage::READ);
     
     if (!fs.isOpened()) {
-        NSLog(@"could not load cam intrinsics file %@", CAM_INTRINSICS_FILE);
+        NSLog(@"%@: could not load cam intrinsics file %@", TAG, CAM_INTRINSICS_FILE);
         return NO;
     }
     
@@ -241,7 +245,7 @@
     }
     
     if (camMat.empty()) {
-        NSLog(@"could not load cam instrinsics matrix from file %@", CAM_INTRINSICS_FILE);
+        NSLog(@"%@: could not load cam instrinsics matrix from file %@", TAG, CAM_INTRINSICS_FILE);
         
         return NO;
     }

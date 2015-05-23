@@ -8,15 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		38BBAC861B070E7B0017954A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAC851B070E7B0017954A /* main.m */; };
-		38BBAC8F1B070E7B0017954A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC8D1B070E7B0017954A /* Main.storyboard */; };
 		38BBAC911B070E7B0017954A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC901B070E7B0017954A /* Images.xcassets */; };
 		38BBAC941B070E7B0017954A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC921B070E7B0017954A /* LaunchScreen.xib */; };
 		38BBACA01B070E7B0017954A /* ARTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAC9F1B070E7B0017954A /* ARTests.m */; };
 		38BBACB71B0710300017954A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBACAB1B0710300017954A /* AppDelegate.m */; };
-		38BBACB81B0710300017954A /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBACAD1B0710300017954A /* GLView.m */; };
 		38BBACB91B0710300017954A /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBACAF1B0710300017954A /* shader.cpp */; };
 		38BBACBA1B0710300017954A /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBACB21B0710300017954A /* Tools.m */; };
-		38BBACBB1B0710300017954A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBACB41B0710300017954A /* RootViewController.m */; };
 		38BBACE11B0710690017954A /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38BBACE01B0710690017954A /* opencv2.framework */; };
 		38BBACE81B07108B0017954A /* ipad3-front.xml in Resources */ = {isa = PBXBuildFile; fileRef = 38BBACE41B07108B0017954A /* ipad3-front.xml */; };
 		38BBACE91B07108B0017954A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38BBACE51B07108B0017954A /* InfoPlist.strings */; };
@@ -39,6 +36,11 @@
 		38BBAD431B0716950017954A /* threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD341B0716950017954A /* threading.cpp */; };
 		38BBAD441B0716950017954A /* tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD361B0716950017954A /* tools.cpp */; };
 		38BBAD451B0716950017954A /* track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD381B0716950017954A /* track.cpp */; };
+		38BBAD481B07C62E0017954A /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD471B07C62E0017954A /* EntryViewController.m */; };
+		38C870741B0848AB00256BE7 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C870711B0848AB00256BE7 /* GLView.m */; };
+		38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38C870761B08618A00256BE7 /* Storyboard.storyboard */; };
+		38C870831B08651400256BE7 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C870811B08651400256BE7 /* GameViewController.m */; };
+		38C870841B08651400256BE7 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C870821B08651400256BE7 /* GameViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +57,6 @@
 		38BBAC801B070E7B0017954A /* AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38BBAC841B070E7B0017954A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38BBAC851B070E7B0017954A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		38BBAC8E1B070E7B0017954A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38BBAC901B070E7B0017954A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		38BBAC931B070E7B0017954A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		38BBAC991B070E7B0017954A /* ARTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,14 +64,10 @@
 		38BBAC9F1B070E7B0017954A /* ARTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTests.m; sourceTree = "<group>"; };
 		38BBACAA1B0710300017954A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		38BBACAB1B0710300017954A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		38BBACAC1B0710300017954A /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
-		38BBACAD1B0710300017954A /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 		38BBACAF1B0710300017954A /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
 		38BBACB01B0710300017954A /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		38BBACB11B0710300017954A /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
 		38BBACB21B0710300017954A /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
-		38BBACB31B0710300017954A /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		38BBACB41B0710300017954A /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		38BBACE01B0710690017954A /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../AR/Libraries/opencv2.framework; sourceTree = "<group>"; };
 		38BBACE41B07108B0017954A /* ipad3-front.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ipad3-front.xml"; sourceTree = "<group>"; };
 		38BBACE61B07108B0017954A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -105,6 +102,14 @@
 		38BBAD381B0716950017954A /* track.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track.cpp; sourceTree = "<group>"; };
 		38BBAD391B0716950017954A /* track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track.h; sourceTree = "<group>"; };
 		38BBAD3A1B0716950017954A /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		38BBAD461B07C62E0017954A /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
+		38BBAD471B07C62E0017954A /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
+		38C870701B0848AB00256BE7 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
+		38C870711B0848AB00256BE7 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		38C870761B08618A00256BE7 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = AR/Storyboard.storyboard; sourceTree = "<group>"; };
+		38C870801B08651300256BE7 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		38C870811B08651400256BE7 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		38C870821B08651400256BE7 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +147,7 @@
 			children = (
 				38BBAD241B0716950017954A /* ocv_ar */,
 				38BBAC821B070E7B0017954A /* AR */,
-				38BBACE21B07108B0017954A /* Resources */,
+				38C870761B08618A00256BE7 /* Storyboard.storyboard */,
 				38BBAC9C1B070E7B0017954A /* ARTests */,
 				38BBAC811B070E7B0017954A /* Products */,
 				38BBACDF1B07105C0017954A /* Frameworks */,
@@ -161,11 +166,11 @@
 		38BBAC821B070E7B0017954A /* AR */ = {
 			isa = PBXGroup;
 			children = (
-				38BBACA91B0710300017954A /* Class */,
-				38BBAC8D1B070E7B0017954A /* Main.storyboard */,
+				38BBACA91B0710300017954A /* Classes */,
+				38BBACE21B07108B0017954A /* Resources */,
+				38BBAC831B070E7B0017954A /* Supporting Files */,
 				38BBAC901B070E7B0017954A /* Images.xcassets */,
 				38BBAC921B070E7B0017954A /* LaunchScreen.xib */,
-				38BBAC831B070E7B0017954A /* Supporting Files */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -197,17 +202,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		38BBACA91B0710300017954A /* Class */ = {
+		38BBACA91B0710300017954A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				38BBACAE1B0710300017954A /* helper */,
 				38BBACAA1B0710300017954A /* AppDelegate.h */,
 				38BBACAB1B0710300017954A /* AppDelegate.m */,
-				38BBACAC1B0710300017954A /* GLView.h */,
-				38BBACAD1B0710300017954A /* GLView.m */,
-				38BBACB31B0710300017954A /* RootViewController.h */,
-				38BBACB41B0710300017954A /* RootViewController.m */,
+				38BBAD461B07C62E0017954A /* EntryViewController.h */,
+				38BBAD471B07C62E0017954A /* EntryViewController.m */,
+				38C870701B0848AB00256BE7 /* GLView.h */,
+				38C870711B0848AB00256BE7 /* GLView.m */,
+				38C870801B08651300256BE7 /* GameViewController.h */,
+				38C870811B08651400256BE7 /* GameViewController.m */,
+				38C870821B08651400256BE7 /* GameViewController.xib */,
 			);
+			name = Classes;
 			path = Class;
 			sourceTree = "<group>";
 		};
@@ -248,8 +257,7 @@
 				38BBACE31B07108B0017954A /* cam-intrinsics */,
 				38BBACE51B07108B0017954A /* InfoPlist.strings */,
 			);
-			name = Resources;
-			path = AR/Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		38BBACE31B07108B0017954A /* cam-intrinsics */ = {
@@ -336,6 +344,7 @@
 				TargetAttributes = {
 					38BBAC7F1B070E7B0017954A = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 4NWC7JXR3F;
 					};
 					38BBAC981B070E7B0017954A = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -368,10 +377,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				38BBACE91B07108B0017954A /* InfoPlist.strings in Resources */,
-				38BBAC8F1B070E7B0017954A /* Main.storyboard in Resources */,
 				38BBAC941B070E7B0017954A /* LaunchScreen.xib in Resources */,
+				38C870841B08651400256BE7 /* GameViewController.xib in Resources */,
 				38BBACE81B07108B0017954A /* ipad3-front.xml in Resources */,
 				38BBAC911B070E7B0017954A /* Images.xcassets in Resources */,
+				38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,17 +402,18 @@
 				38BBAD3C1B0716950017954A /* detect.cpp in Sources */,
 				38BBAD3E1B0716950017954A /* ident_7x7.cpp in Sources */,
 				38BBACB71B0710300017954A /* AppDelegate.m in Sources */,
+				38C870741B0848AB00256BE7 /* GLView.m in Sources */,
 				38BBACBA1B0710300017954A /* Tools.m in Sources */,
-				38BBACBB1B0710300017954A /* RootViewController.m in Sources */,
 				38BBAD451B0716950017954A /* track.cpp in Sources */,
 				38BBAD441B0716950017954A /* tools.cpp in Sources */,
+				38BBAD481B07C62E0017954A /* EntryViewController.m in Sources */,
 				38BBAD431B0716950017954A /* threading.cpp in Sources */,
 				38BBAC861B070E7B0017954A /* main.m in Sources */,
 				38BBACB91B0710300017954A /* shader.cpp in Sources */,
 				38BBAD3F1B0716950017954A /* ident_templ.cpp in Sources */,
 				38BBAD411B0716950017954A /* marker.cpp in Sources */,
 				38BBAD3D1B0716950017954A /* ident.cpp in Sources */,
-				38BBACB81B0710300017954A /* GLView.m in Sources */,
+				38C870831B08651400256BE7 /* GameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,14 +436,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		38BBAC8D1B070E7B0017954A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				38BBAC8E1B070E7B0017954A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		38BBAC921B070E7B0017954A /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -540,6 +543,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AR.xcodeproj",
@@ -558,6 +563,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -567,6 +573,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AR.xcodeproj",
@@ -585,6 +593,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

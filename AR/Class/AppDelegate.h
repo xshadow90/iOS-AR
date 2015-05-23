@@ -11,7 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RootViewController.h"
+#import "EntryViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
