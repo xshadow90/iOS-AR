@@ -1,5 +1,5 @@
 /**
- * OcvARBasic - Basic ocv_ar example for iOS
+ * OcvARBasicNativeCam - Basic ocv_ar example for iOS with native camera usage
  *
  * Main view controller - implementation file.
  *
@@ -10,8 +10,31 @@
  */
 
 #import "GameViewController.h"
+#import "helper/Tools.h"
+#import <sys/utsname.h>
 
-static NSString* TAG = @"GameViewController";
+NSString *TAG = @"GameViewController";
+
+/**
+ * Small helper function to convert a fourCC <code> to
+ * a character string <fourCC> for printf and the like
+ */
+void fourCCStringFromCode(int code, char fourCC[5]) {
+    for (int i = 0; i < 4; i++) {
+        fourCC[3 - i] = code >> (i * 8);
+    }
+    fourCC[4] = '\0';
+}
+
+void printFloatMat4x4(const float *m) {
+    for (int y = 0; y < 4; ++y) {
+        for (int x = 0; x < 4; ++x) {
+            printf("%f ", m[y * 4 + x]);
+        }
+        
+        printf("\n");
+    }
+}
 
 @interface GameViewController(Private)
 /**
@@ -25,9 +48,21 @@ static NSString* TAG = @"GameViewController";
 - (BOOL)initDetector;
 
 /**
- * resize the frame view to CGRect in <newFrameRect>
+ * Called on the first input frame and prepares everything for the specified
+ * frame size and number of color channels
  */
-- (void)resizeFrameView:(NSValue *)newFrameRect;
+- (void)prepareForFramesOfSize:(CGSize)size numChannels:(int)chan;
+
+/**
+ * resize the proc frame view to CGRect in <newFrameRect> and also
+ * set the correct frame for the gl view
+ */
+- (void)setCorrectedFrameForViews:(NSValue *)newFrameRect;
+
+/**
+ * Notify the video session about the interface orientation change
+ */
+- (void)interfaceOrientationChanged:(UIInterfaceOrientation)o;
 
 /**
  * handler that is called when a output selection button is pressed
@@ -35,7 +70,8 @@ static NSString* TAG = @"GameViewController";
 - (void)procOutputSelectBtnAction:(UIButton *)sender;
 
 /**
- * force to redraw views
+ * force to redraw views. this method is only to display the intermediate
+ * frame processing output for debugging
  */
 - (void)updateViews;
 @end
@@ -43,31 +79,73 @@ static NSString* TAG = @"GameViewController";
 
 @implementation GameViewController
 
+- (void)printCamIntrinsicFile {
+    
+    NSLog(@"GameViewController: %@", camIntrinsicsFile);
+    
+}
+@synthesize glView;
+
 #pragma mark init/dealloc
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    
-    NSLog(@"%@: start initialling", TAG);
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // find out the ipad model
+        
+        struct utsname systemInfo;
+        uname(&systemInfo);
+        NSString *machineInfo = [NSString stringWithCString:systemInfo.machine encoding:NSASCIIStringEncoding];
+        NSString *machineInfoShort = [[machineInfo substringToIndex:5] lowercaseString];
+        
+        NSLog(@"%@: device model (short) is %@", TAG, machineInfoShort);
+        
+        int machineModelVersion = 0;
+        if ([machineInfoShort isEqualToString:@"ipad2"]) {
+            machineModelVersion = 2;
+        } else if ([machineInfoShort isEqualToString:@"ipad3"]) {
+            machineModelVersion = 3;
+        } else {
+            NSLog(@"%@: no camera intrinsics available for this model!", TAG);
+            machineModelVersion = 3;    // default. might not work!
+        }
+        // TODO: BUG
+        //camIntrinsicsFile = [NSString stringWithFormat:@"ipad%d-front.xml", machineModelVersion];
+        camIntrinsicsFile = @"ipad3-front.xml";
+        
         useDistCoeff = USE_DIST_COEFF;
-
-        detector = new Detect(IDENT_TYPE_CODE_7X7,  // marker type
-                              MARKER_REAL_SIZE_M,   // real marker size in meters
-                              PROJ_FLIP_MODE);      // projection flip mode
+        
+        // create the detector
+        detector = new ocv_ar::Detect(ocv_ar::IDENT_TYPE_CODE_7X7,  // marker type
+                                      MARKER_REAL_SIZE_M,           // real marker size in meters
+                                      PROJ_FLIP_MODE);              // projection flip mode
+        // create the tracker and pass it a reference to the detector object
+        tracker = new ocv_ar::Track(detector);
     }
-    NSLog(@"%@: end initialling", TAG);
+    
+    NSLog(@"%@: initWithNibName finished", TAG);
     return self;
 }
 
 - (void)dealloc {
-    [cam stop];
-    [cam release];
+    NSLog(@"%@: now dealloc ...", TAG);
     
+    [camIntrinsicsFile release];
+    
+    // release camera stuff
+    [vidDataOutput release];
+    [camDeviceInput release];
+    [camSession release];
+    
+    // release views
     [glView release];
-    [frameView release];
+    [camView release];
+    [procFrameView release];
     [baseView release];
     
+    // delete marker detection and tracking objects
+    if (tracker) delete tracker;
     if (detector) delete detector;
     
     [super dealloc];
@@ -76,29 +154,35 @@ static NSString* TAG = @"GameViewController";
 #pragma mark parent methods
 
 - (void)didReceiveMemoryWarning {
-    NSLog(@"%@: memory warning!!!", TAG);
-    
+    NSLog(@"memory warning!!!");
     [super didReceiveMemoryWarning];
 }
 
 - (void)loadView {
+    
     const CGRect screenRect = [[UIScreen mainScreen] bounds];
     
-    NSLog(@"%@: loading view of size %dx%d", TAG, (int)screenRect.size.width, (int)screenRect.size.height);
+    NSLog(@"loading view of size %dx%d", (int)screenRect.size.width, (int)screenRect.size.height);
     
     // create an empty base view
-    baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenRect.size.height, screenRect.size.width)];
+    CGRect baseFrame = CGRectMake(0, 0, screenRect.size.height, screenRect.size.width);
+    baseView = [[UIView alloc] initWithFrame:baseFrame];
     
     // create the image view for the camera frames
-    frameView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenRect.size.height, screenRect.size.width)];
-    [baseView addSubview:frameView];
+    camView = [[CamView alloc] initWithFrame:baseFrame];
+    [baseView addSubview:camView];
+    
+    // create view for processed frames
+    procFrameView = [[UIImageView alloc] initWithFrame:baseFrame];
+    [procFrameView setHidden:YES];  // initially hidden
+    [baseView addSubview:procFrameView];
     
     // create the GL view
     glView = [[GLView alloc] initWithFrame:baseView.frame];
+    [glView setTracker:tracker];    // pass the tracker object
     [baseView addSubview:glView];
     
     // set a list of buttons for processing output display
-    // TODO
     NSArray *btnTitles = [NSArray arrayWithObjects:
                           @"Normal",
                           @"Preproc",
@@ -126,14 +210,28 @@ static NSString* TAG = @"GameViewController";
     [self setView:baseView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"%@: view will appear - start camera session", TAG);
+    
+    [camSession startRunning];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"%@: view did disappear - stop camera session", TAG);
+    
+    [camSession stopRunning];
+    [self viewDidLoad];
+}
+
 - (void)viewDidLoad {
+    NSLog(@"%@: viewDidLoad ...", TAG);
     [super viewDidLoad];
     
     // init detector
     if ([self initDetector]) {
-        NSLog(@"%@: cam intrinsics loaded from file %@", TAG, CAM_INTRINSICS_FILE);
+        NSLog(@"cam intrinsics loaded from file %@", camIntrinsicsFile);
     } else {
-        NSLog(@"%@: detector initialization failure", TAG);
+        NSLog(@"detector initialization failure");
     }
     
     // set the marker scale for the GL view
@@ -141,102 +239,142 @@ static NSString* TAG = @"GameViewController";
     
     // set up camera
     [self initCam];
-    [cam start];
-    
-    NSLog(@"%@: cam loaded: %d", TAG, cam.captureSessionLoaded);
 }
 
-#pragma mark CvVideoCameraDelegate methods
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o duration:(NSTimeInterval)duration {
+    [self interfaceOrientationChanged:o];
+}
 
-- (void)processImage:(Mat &)image {
-    if (!detector->isPrepared()) {  // on first frame: prepare the detector
-        detector->prepare(image.cols, image.rows, image.channels());
-        
-        float frameAspectRatio = (float)image.cols / (float)image.rows;
-        NSLog(@"camera frames are of size %dx%d (aspect %f)", image.cols, image.rows, frameAspectRatio);
-        
-        float viewW = frameView.frame.size.width;  // this is for landscape view
-        float viewH = frameView.frame.size.height;   // this is for landscape view
-        NSLog(@"view is of size %dx%d (aspect %f)", (int)viewW, (int)viewH, viewW / viewH);
-        if (frameAspectRatio != viewW / viewH) { // aspect ratio does not fit
-            float newViewH = viewW / frameAspectRatio;   // calc new height
-            float viewYOff = (viewH - newViewH) / 2;
-            NSLog(@"changed view size to %dx%d", (int)viewW, (int)newViewH);
-            CGRect newFrameViewRect = CGRectMake(0, viewYOff, viewW, newViewH);
+#pragma mark AVCaptureVideoDataOutputSampleBufferDelegate methods
 
-            // processImage is not running on the main thread, therefore
-            // calling "setFrame" would have no effect!
-            [self performSelectorOnMainThread:@selector(resizeFrameView:)
-                                   withObject:[NSValue valueWithCGRect:newFrameViewRect]
-                                waitUntilDone:NO];
-        }
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+       fromConnection:(AVCaptureConnection *)connection
+{
+    // note that this method does *not* run in the main thread!
+    
+    // convert the incoming YUV camera frame to a grayscale cv mat
+    [Tools convertYUVSampleBuffer:sampleBuffer toGrayscaleMat:curFrame];
+    
+    if (!detector->isPrepared()) {  // on first frame: prepare for the frames
+        [self prepareForFramesOfSize:CGSizeMake(curFrame.cols, curFrame.rows)
+                         numChannels:curFrame.channels()];
     }
     
-    // set the grabbed frame as input
-    detector->setInputFrame(&image);
+    // tell the tracker to run the detection on the input frame
+    tracker->detect(&curFrame);
     
-    // process the frame
-    detector->processFrame();
+    // get an output frame. may be NULL if no frame processing output is selected
+    dispFrame = detector->getOutputFrame();
     
-    // estimate the 3D poses of the marker
-    detector->estimateMarkersPoses();
-
-    // "outFrame" is only set when a processing level for output is selected
-    Mat *outFrame = detector->getOutputFrame();
-    
-    if (outFrame) { // display this frame instead of the original camera frame
-        outFrame->copyTo(image);
+    // update the views on the main thread
+    if (dispFrame) {
+        [self performSelectorOnMainThread:@selector(updateViews)
+                               withObject:nil
+                            waitUntilDone:NO];
     }
-    
-    // update gl view
-    [glView setMarkers:detector->getMarkers()];
-    
-    [self performSelectorOnMainThread:@selector(updateViews)
-                           withObject:nil
-                        waitUntilDone:NO];
 }
 
 #pragma mark private methods
 
 - (void)updateViews {
-    [glView setNeedsDisplay];
+    // this method is only to display the intermediate frame processing
+    // output of the detector.
+    // (it is slow but it's only for debugging)
+    
+    // when we have a frame to display in "procFrameView" ...
+    // ... convert it to an UIImage
+    UIImage *dispUIImage = [Tools imageFromCvMat:dispFrame];
+        
+    // and display it with the UIImageView "procFrameView"
+    [procFrameView setImage:dispUIImage];
+    [procFrameView setNeedsDisplay];
 }
 
 - (void)initCam {
-    assert(cam == NULL);
-    
     NSLog(@"initializing cam");
     
-    cam = [[CvVideoCamera alloc] initWithParentView:frameView];
+    NSError *error = nil;
     
-    cam.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
-    cam.defaultAVCaptureSessionPreset = AVCaptureSessionPresetHigh;
-    cam.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationLandscapeLeft;
-    cam.defaultFPS = 30;
-    //    cam.grayscale = NO;
+    // set up the camera capture session
+    camSession = [[AVCaptureSession alloc] init];
+    [camSession setSessionPreset:CAM_SESSION_PRESET];
+    [camView setSession:camSession];
     
-    [cam setDelegate:self];
+    // get the camera device
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    assert(devices.count > 0);
+    
+	AVCaptureDevice *camDevice = [devices firstObject];
+	for (AVCaptureDevice *device in devices) {
+		if ([device position] == AVCaptureDevicePositionBack) {
+			camDevice = device;
+			break;
+		}
+	}
+    
+    camDeviceInput = [[AVCaptureDeviceInput deviceInputWithDevice:camDevice error:&error] retain];
+    
+    if (error) {
+        NSLog(@"error getting camera device: %@", error);
+        return;
+    }
+    
+    assert(camDeviceInput);
+    
+    // add the camera device to the session
+    if ([camSession canAddInput:camDeviceInput]) {
+        [camSession addInput:camDeviceInput];
+        [self interfaceOrientationChanged:self.interfaceOrientation];
+    }
+    
+    // create camera output
+    vidDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [camSession addOutput:vidDataOutput];
+    
+    // set output delegate to self
+    dispatch_queue_t queue = dispatch_queue_create("vid_output_queue", NULL);
+    [vidDataOutput setSampleBufferDelegate:self queue:queue];
+    dispatch_release(queue);
+    
+    // get best output video format
+    NSArray *outputPixelFormats = vidDataOutput.availableVideoCVPixelFormatTypes;
+    int bestPixelFormatCode = -1;
+    for (NSNumber *format in outputPixelFormats) {
+        int code = [format intValue];
+        if (bestPixelFormatCode == -1) bestPixelFormatCode = code;  // choose the first as best
+        char fourCC[5];
+        fourCCStringFromCode(code, fourCC);
+        NSLog(@"available video output format: %s (code %d)", fourCC, code);
+    }
+
+    // specify output video format
+    NSDictionary *outputSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:bestPixelFormatCode] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+    [vidDataOutput setVideoSettings:outputSettings];
+    
+//    // cap to 15 fps
+//    [vidDataOutput setMinFrameDuration:CMTimeMake(1, 15)];
 }
 
 - (BOOL)initDetector {
-    FileStorage fs;
-    const char *path = [[[NSBundle mainBundle] pathForResource:CAM_INTRINSICS_FILE ofType:NULL]
-                        cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    cv::FileStorage fs;
+    const char *path = [[[NSBundle mainBundle] pathForResource:camIntrinsicsFile ofType:NULL]
+        cStringUsingEncoding:NSASCIIStringEncoding];
     
     if (!path) {
-        NSLog(@"%@: could not find cam intrinsics file %@", TAG, CAM_INTRINSICS_FILE);
+        NSLog(@"could not find cam intrinsics file %@", camIntrinsicsFile);
         return NO;
     }
     
-    fs.open(path, FileStorage::READ);
+    fs.open(path, cv::FileStorage::READ);
     
     if (!fs.isOpened()) {
-        NSLog(@"%@: could not load cam intrinsics file %@", TAG, CAM_INTRINSICS_FILE);
+        NSLog(@"could not load cam intrinsics file %@", camIntrinsicsFile);
         return NO;
     }
     
-    Mat camMat;
-    Mat distCoeff;
+    cv::Mat camMat;
+    cv::Mat distCoeff;
     
     fs["Camera_Matrix"]  >> camMat;
     
@@ -245,7 +383,7 @@ static NSString* TAG = @"GameViewController";
     }
     
     if (camMat.empty()) {
-        NSLog(@"%@: could not load cam instrinsics matrix from file %@", TAG, CAM_INTRINSICS_FILE);
+        NSLog(@"could not load cam instrinsics matrix from file %@", camIntrinsicsFile);
         
         return NO;
     }
@@ -255,33 +393,55 @@ static NSString* TAG = @"GameViewController";
     return YES;
 }
 
-- (void)resizeFrameView:(NSValue *)newFrameRect {
-    // running this on the main thread is necessary
-    // stopping and starting again the camera is also necessary
+- (void)prepareForFramesOfSize:(CGSize)size numChannels:(int)chan {
+    // WARNING: this method will not be called from the main thead!
     
-    const CGRect r = [newFrameRect CGRectValue];
+    detector->prepare(size.width, size.height, chan);
     
-    [cam stop];
-    [frameView setFrame:r];
-    [cam start];
+    float frameAspectRatio = size.width / size.height;
+    NSLog(@"camera frames are of size %dx%d (aspect %f)", (int)size.width, (int)size.height, frameAspectRatio);
+
+    // update proc frame view size
+    float newViewH = procFrameView.frame.size.width / frameAspectRatio;   // calc new height
+    float viewYOff = (procFrameView.frame.size.height - newViewH) / 2;
+    
+    CGRect correctedViewRect = CGRectMake(0, viewYOff, procFrameView.frame.size.width, newViewH);
+    [self performSelectorOnMainThread:@selector(setCorrectedFrameForViews:)         // we need to execute this on the main thead
+                           withObject:[NSValue valueWithCGRect:correctedViewRect]   // otherwise it will have no effect
+                        waitUntilDone:NO];
+}
+
+- (void)setCorrectedFrameForViews:(NSValue *)newFrameRect {
+    // WARNING: this *must* be executed on the main thread
+    
+    // set the corrected frame for the proc frame view
+    CGRect r = [newFrameRect CGRectValue];
+    [procFrameView setFrame:r];
     
     // also calculate a new GL projection matrix and resize the gl view
     float *projMatPtr = detector->getProjMat(r.size.width, r.size.height);
+    NSLog(@"projection matrix:");
+    printFloatMat4x4(projMatPtr);
+    NSLog(@"------------------");
     [glView setMarkerProjMat:projMatPtr];
     [glView setFrame:r];
     [glView resizeView:r.size];
-    
-    NSLog(@"new view size %dx%d, pos %d,%d",
-          (int)frameView.frame.size.width, (int)frameView.frame.size.height,
-          (int)frameView.frame.origin.x, (int)frameView.frame.origin.y);
 }
 
 - (void)procOutputSelectBtnAction:(UIButton *)sender {
-    NSLog(@"proc output selection button pressed: %@ (proc type %d)", [sender titleForState:UIControlStateNormal], sender.tag);
+    NSLog(@"proc output selection button pressed: %@ (proc type %ld)",
+          [sender titleForState:UIControlStateNormal], (long)sender.tag);
     
-    [glView setShowMarkers:(sender.tag < 0)];   // only show markers in "normal" display mode
+    BOOL normalDispMode = (sender.tag < 0);
+    [glView setShowMarkers:normalDispMode];   // only show markers in "normal" display mode
+    [camView setHidden:!normalDispMode];      // only show original camera frames in "normal" display mode
+    [procFrameView setHidden:normalDispMode]; // only show processed frames for other than "normal" display mode
     
     detector->setFrameOutputLevel((ocv_ar::FrameProcLevel)sender.tag);
+}
+
+- (void)interfaceOrientationChanged:(UIInterfaceOrientation)o {
+    [[(AVCaptureVideoPreviewLayer *)camView.layer connection] setVideoOrientation:(AVCaptureVideoOrientation)o];
 }
 
 @end

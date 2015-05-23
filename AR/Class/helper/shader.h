@@ -14,27 +14,28 @@
 #include <OpenGLES/ES2/gl.h>
 
 typedef enum {
-	ATTR,
-	UNIF
+    ATTR,
+    UNIF
 } ShaderParamType;
 
 class Shader {
 public:
-	Shader();
-	~Shader();
-
-	bool buildFromSrc(const char *vshSrc, const char *fshSrc);
-	void use();
-
-	GLint getParam(ShaderParamType type, const char *name);
-
+    Shader();
+    ~Shader();
+    
+    bool buildFromSrc(const char *vshSrc, const char *fshSrc);
+    void use();
+    
+    GLint getParam(ShaderParamType type, const char *name);
+    
 private:
-	static GLuint create(const char *vshSrc, const char *fshSrc, GLuint *vshId, GLuint *fshId);
-	static GLuint compile(GLenum type, const char *src);
-
-	GLuint programId;
-	GLuint vshId;
-	GLuint fshId;
+    static GLuint create(const char *vshSrc, const char *fshSrc, GLuint *vshId, GLuint *fshId);
+    static GLuint compile(GLenum type, const char *src);
+    
+    GLuint programId;
+    GLuint vshId;
+    GLuint fshId;
 };
 
 #endif
+

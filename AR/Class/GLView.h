@@ -1,5 +1,5 @@
 /**
- * OcvARBasic - Basic ocv_ar example for iOS
+ * OcvARBasicNativeCam - Basic ocv_ar example for iOS with native camera usage
  *
  * gl view - header file.
  *
@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 #include "helper/shader.h"
 #include "ocv_ar.h"
@@ -39,16 +40,25 @@ using namespace std;
     GLfloat markerScaleMat[16]; // global marker transform (scale) matrix
 }
 
-@property (nonatomic, assign) vector<ocv_ar::Marker *> markers; // found markers
-@property (nonatomic, assign) float *markerProjMat;             // 4x4 projection matrix
-@property (nonatomic, assign) float markerScale;                // marker scaling
-@property (nonatomic, assign) BOOL showMarkers;                 // enable/disable marker display
+@property (nonatomic, assign) ocv_ar::Track *tracker;   // tracker object that handles marker tracking and motion interpolation
+@property (nonatomic, assign) float *markerProjMat;     // 4x4 projection matrix
+@property (nonatomic, assign) float markerScale;        // marker scaling
+@property (nonatomic, assign) BOOL showMarkers;         // enable/disable marker display
 
-- (void)setMarkerScale:(float)s;    // overwrite 'assign' method
+/**
+ * set a marker scale <s> (real marker side length in meters)
+ * overwrite 'assign' method
+ */
+- (void)setMarkerScale:(float)s;
 
 /**
  * Resize the gl view and adjust gl properties
  */
 - (void)resizeView:(CGSize)size;
+
+/**
+ * redraw the frame (will just call [self display])
+ */
+- (void)render:(CADisplayLink *)displayLink;
 
 @end

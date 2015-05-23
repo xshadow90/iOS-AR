@@ -1,5 +1,5 @@
 /**
- * OcvARBasic - Basic ocv_ar example for iOS
+ * OcvARBasicNativeCam - Basic ocv_ar example for iOS with native camera usage
  *
  * Main view controller - header file.
  *
@@ -11,38 +11,47 @@
 
 #import <UIKit/UIKit.h>
 
-#import <opencv2/videoio/cap_ios.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #include "ocv_ar.h"
 
-#import "Tools.h"
+#import "CamView.h"
 #import "GLView.h"
 
 // change to following lines to adjust to your setting:
 
 #define MARKER_REAL_SIZE_M  0.042f
-#define CAM_INTRINSICS_FILE @"ipad3-front.xml"
+#define CAM_SESSION_PRESET  AVCaptureSessionPresetHigh
 #define USE_DIST_COEFF      NO
-#define PROJ_FLIP_MODE      FLIP_V
-
-using namespace cv;
-using namespace ocv_ar;
+#define PROJ_FLIP_MODE      ocv_ar::FLIP_H
 
 /**
  * Main view controller.
- * Handles UI initialization and interactions.
+ * Handles UI initialization and interactions. Handles camera frame input.
  */
-@interface GameViewController : UIViewController<CvVideoCameraDelegate> {
-    CvVideoCamera *cam;     // for grabbing video frames
+@interface GameViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate> {
     
-    UIView *baseView;       // root view
-    UIImageView *frameView; // frame view shows the grabbed video frames
-    GLView *glView;         // gl view displays the highlighted markers
+    NSString *camIntrinsicsFile;                // camera intrinsics file to use
+    AVCaptureSession *camSession;               // controlls the camera session
+    AVCaptureDeviceInput *camDeviceInput;       // input device: camera
+    AVCaptureVideoDataOutput *vidDataOutput;    // controlls the video output
     
-    Detect *detector;       // ocv_ar::Detector for marker detection
+    cv::Mat curFrame;           // currently grabbed camera frame (grayscale)
+    cv::Mat *dispFrame;         // frame to display. is NULL when the "normal" camera preview is displayed
+    
+    UIView *baseView;           // root view
+    UIImageView *procFrameView; // view for processed frames
+    CamView *camView;           // shows the grabbed video frames ("camera preview")
+    
+    ocv_ar::Detect *detector;   // ocv_ar::Detector for marker detection
+    ocv_ar::Track *tracker;     // ocv_ar::Track for marker tracking and motion interpolation
     
     BOOL useDistCoeff;      // use distortion coefficients in camera intrinsics?
 }
 
+@property (nonatomic,readonly) GLView *glView;  // gl view displays the highlighted markers
+
+-(void)printCamIntrinsicFile;
 
 @end

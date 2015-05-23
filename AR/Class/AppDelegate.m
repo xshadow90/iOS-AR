@@ -10,6 +10,7 @@
  */
 
 #import "AppDelegate.h"
+#import "GameViewController.h"
 
 @implementation AppDelegate
 
@@ -17,15 +18,12 @@
 {
 //    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    self.window.backgroundColor = [UIColor whiteColor];
-
-    // add our custom view controller "RootViewController"
-//    UIViewController *rootViewCtrl = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-//    [self.window setRootViewController:rootViewCtr
-//    l];
-//    [self.window makeKeyAndVisible];
-    
-//    UIViewController *rootViewCtrl = [[[EntryViewController alloc]initWithNibName:nil bundle:nil ]autorelease];
+//    
+//    // add our custom view controller "RootViewController"
+//    GameViewController *rootViewCtrl = [[[GameViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 //    [self.window setRootViewController:rootViewCtrl];
+//    
+//    // start the main application window
 //    [self.window makeKeyAndVisible];
     
     return YES;

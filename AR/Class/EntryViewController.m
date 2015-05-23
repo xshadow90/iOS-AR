@@ -13,24 +13,28 @@ static NSString *TAG = @"EntryViewController";
 
 @interface EntryViewController () {
     
-    GameViewController *rtViewController;
+    GameViewController *gameViewController;
+    UIWindow *gameWindow;
 }
 
 @end
 
 @implementation EntryViewController
 
+#pragma mark protocal
+
+- (void)dealloc {
+    
+    NSLog(@"%@: deallocating...", TAG);
+    [gameViewController release];
+    [super dealloc];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIWindow* window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    window.backgroundColor = [UIColor whiteColor];
-    
-    rtViewController = [[[GameViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    [window setRootViewController:rtViewController];
-
+    gameViewController = [[GameViewController alloc] initWithNibName:nil bundle:nil];
     NSLog(@"%@: finish view loading", TAG);
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,8 +42,11 @@ static NSString *TAG = @"EntryViewController";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark function
 
 - (IBAction)didButtomPressed: (id)sender {
+    
+    [gameViewController printCamIntrinsicFile];
     
     NSLog(@"%@:Button pressed: %@", TAG, [sender currentTitle]);
     if ([[sender currentTitle] isEqualToString: @"Single Mode"]) {
@@ -47,7 +54,7 @@ static NSString *TAG = @"EntryViewController";
     } else if ([[sender currentTitle] isEqualToString: @"Multi Mode"]) {
         NSLog(@"%@: start multi mode", TAG);
     }
-    [self showViewController: rtViewController];
+    [self showViewController: gameViewController];
 }
 
 - (void)showViewController:(GameViewController *)vc {

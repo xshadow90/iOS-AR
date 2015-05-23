@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		384B8B321B10157E0013AAB6 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 384B8B311B10157E0013AAB6 /* GLView.m */; };
+		384B8B351B10158A0013AAB6 /* CamView.m in Sources */ = {isa = PBXBuildFile; fileRef = 384B8B341B10158A0013AAB6 /* CamView.m */; };
+		384B8B381B1015970013AAB6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 384B8B371B1015970013AAB6 /* GameViewController.m */; };
+		384B8B3A1B1017980013AAB6 /* ipad2-front.xml in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B391B1017980013AAB6 /* ipad2-front.xml */; };
+		384B8B3E1B1029A10013AAB6 /* marker_f.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B3C1B1029A10013AAB6 /* marker_f.glsl */; };
+		384B8B3F1B1029A10013AAB6 /* marker_v.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B3D1B1029A10013AAB6 /* marker_v.glsl */; };
 		38BBAC861B070E7B0017954A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAC851B070E7B0017954A /* main.m */; };
 		38BBAC911B070E7B0017954A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC901B070E7B0017954A /* Images.xcassets */; };
 		38BBAC941B070E7B0017954A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC921B070E7B0017954A /* LaunchScreen.xib */; };
@@ -37,9 +43,7 @@
 		38BBAD441B0716950017954A /* tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD361B0716950017954A /* tools.cpp */; };
 		38BBAD451B0716950017954A /* track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD381B0716950017954A /* track.cpp */; };
 		38BBAD481B07C62E0017954A /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD471B07C62E0017954A /* EntryViewController.m */; };
-		38C870741B0848AB00256BE7 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C870711B0848AB00256BE7 /* GLView.m */; };
 		38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38C870761B08618A00256BE7 /* Storyboard.storyboard */; };
-		38C870831B08651400256BE7 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C870811B08651400256BE7 /* GameViewController.m */; };
 		38C870841B08651400256BE7 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C870821B08651400256BE7 /* GameViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +58,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		384B8B301B10157E0013AAB6 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
+		384B8B311B10157E0013AAB6 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		384B8B331B10158A0013AAB6 /* CamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamView.h; sourceTree = "<group>"; };
+		384B8B341B10158A0013AAB6 /* CamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamView.m; sourceTree = "<group>"; };
+		384B8B361B1015970013AAB6 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		384B8B371B1015970013AAB6 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		384B8B391B1017980013AAB6 /* ipad2-front.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ipad2-front.xml"; sourceTree = "<group>"; };
+		384B8B3C1B1029A10013AAB6 /* marker_f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker_f.glsl; sourceTree = "<group>"; };
+		384B8B3D1B1029A10013AAB6 /* marker_v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker_v.glsl; sourceTree = "<group>"; };
 		38BBAC801B070E7B0017954A /* AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38BBAC841B070E7B0017954A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38BBAC851B070E7B0017954A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -104,11 +117,7 @@
 		38BBAD3A1B0716950017954A /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		38BBAD461B07C62E0017954A /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		38BBAD471B07C62E0017954A /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
-		38C870701B0848AB00256BE7 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
-		38C870711B0848AB00256BE7 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 		38C870761B08618A00256BE7 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = AR/Storyboard.storyboard; sourceTree = "<group>"; };
-		38C870801B08651300256BE7 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		38C870811B08651400256BE7 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		38C870821B08651400256BE7 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +151,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		384B8B3B1B1029A10013AAB6 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				384B8B3C1B1029A10013AAB6 /* marker_f.glsl */,
+				384B8B3D1B1029A10013AAB6 /* marker_v.glsl */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		38BBAC771B070E7B0017954A = {
 			isa = PBXGroup;
 			children = (
@@ -210,10 +228,12 @@
 				38BBACAB1B0710300017954A /* AppDelegate.m */,
 				38BBAD461B07C62E0017954A /* EntryViewController.h */,
 				38BBAD471B07C62E0017954A /* EntryViewController.m */,
-				38C870701B0848AB00256BE7 /* GLView.h */,
-				38C870711B0848AB00256BE7 /* GLView.m */,
-				38C870801B08651300256BE7 /* GameViewController.h */,
-				38C870811B08651400256BE7 /* GameViewController.m */,
+				384B8B301B10157E0013AAB6 /* GLView.h */,
+				384B8B311B10157E0013AAB6 /* GLView.m */,
+				384B8B331B10158A0013AAB6 /* CamView.h */,
+				384B8B341B10158A0013AAB6 /* CamView.m */,
+				384B8B361B1015970013AAB6 /* GameViewController.h */,
+				384B8B371B1015970013AAB6 /* GameViewController.m */,
 				38C870821B08651400256BE7 /* GameViewController.xib */,
 			);
 			name = Classes;
@@ -254,6 +274,7 @@
 		38BBACE21B07108B0017954A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				384B8B3B1B1029A10013AAB6 /* shaders */,
 				38BBACE31B07108B0017954A /* cam-intrinsics */,
 				38BBACE51B07108B0017954A /* InfoPlist.strings */,
 			);
@@ -264,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				38BBACE41B07108B0017954A /* ipad3-front.xml */,
+				384B8B391B1017980013AAB6 /* ipad2-front.xml */,
 			);
 			path = "cam-intrinsics";
 			sourceTree = "<group>";
@@ -377,11 +399,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				38BBACE91B07108B0017954A /* InfoPlist.strings in Resources */,
+				384B8B3F1B1029A10013AAB6 /* marker_v.glsl in Resources */,
 				38BBAC941B070E7B0017954A /* LaunchScreen.xib in Resources */,
 				38C870841B08651400256BE7 /* GameViewController.xib in Resources */,
 				38BBACE81B07108B0017954A /* ipad3-front.xml in Resources */,
+				384B8B3E1B1029A10013AAB6 /* marker_f.glsl in Resources */,
 				38BBAC911B070E7B0017954A /* Images.xcassets in Resources */,
 				38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */,
+				384B8B3A1B1017980013AAB6 /* ipad2-front.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,10 +424,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				384B8B351B10158A0013AAB6 /* CamView.m in Sources */,
 				38BBAD3C1B0716950017954A /* detect.cpp in Sources */,
 				38BBAD3E1B0716950017954A /* ident_7x7.cpp in Sources */,
 				38BBACB71B0710300017954A /* AppDelegate.m in Sources */,
-				38C870741B0848AB00256BE7 /* GLView.m in Sources */,
 				38BBACBA1B0710300017954A /* Tools.m in Sources */,
 				38BBAD451B0716950017954A /* track.cpp in Sources */,
 				38BBAD441B0716950017954A /* tools.cpp in Sources */,
@@ -411,9 +436,10 @@
 				38BBAC861B070E7B0017954A /* main.m in Sources */,
 				38BBACB91B0710300017954A /* shader.cpp in Sources */,
 				38BBAD3F1B0716950017954A /* ident_templ.cpp in Sources */,
+				384B8B381B1015970013AAB6 /* GameViewController.m in Sources */,
 				38BBAD411B0716950017954A /* marker.cpp in Sources */,
 				38BBAD3D1B0716950017954A /* ident.cpp in Sources */,
-				38C870831B08651400256BE7 /* GameViewController.m in Sources */,
+				384B8B321B10157E0013AAB6 /* GLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

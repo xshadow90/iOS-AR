@@ -1,5 +1,5 @@
 /**
- * OcvARBasic - Basic ocv_ar example for iOS
+ * OcvARBasicNativeCam - Basic ocv_ar example for iOS with native camera usage
  *
  * gl view - implementation file.
  *
@@ -20,9 +20,9 @@
 // vertex data for a quad
 const GLfloat quadVertices[] = {
     -1, -1, 0,
-     1, -1, 0,
+    1, -1, 0,
     -1,  1, 0,
-     1,  1, 0 };
+    1,  1, 0 };
 
 
 @interface GLView(Private)
@@ -44,13 +44,13 @@ const GLfloat quadVertices[] = {
 /**
  * draw a <marker>
  */
-- (void)drawMarker:(ocv_ar::Marker *)marker;
+- (void)drawMarker:(const ocv_ar::Marker *)marker;
 @end
 
 
 @implementation GLView
 
-@synthesize markers;
+@synthesize tracker;
 @synthesize markerProjMat;
 @synthesize markerScale;
 @synthesize showMarkers;
@@ -75,8 +75,14 @@ const GLfloat quadVertices[] = {
         memset(markerScaleMat, 0, sizeof(GLfloat) * 16);
         [self setMarkerScale:1.0f];
         
+        // add the render method of our GLView to the main run loop in order to
+        // render every frame periodically
+        CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
         // configure
-        [self setOpaque:NO];
+        [self setEnableSetNeedsDisplay:NO]; // important to render every frame periodically and not on demand!
+        [self setOpaque:NO];                // we have a transparent overlay
         
         [self setDrawableColorFormat:GLKViewDrawableColorFormatRGBA8888];
         [self setDrawableDepthFormat:GLKViewDrawableDepthFormat24];
@@ -97,21 +103,27 @@ const GLfloat quadVertices[] = {
     
     glViewport(0, 0, viewportSize.width, viewportSize.height);
     
-    if (!showMarkers) return;
+    if (!showMarkers) return;   // break here in order not to display markers
+    
+    // update the tracker to smoothly move to new marker positions
+    tracker->update();
     
     // use the marker shader
     markerDispShader.use();
     
     if (markerProjMat) {
-//        NSLog(@"GLView: drawing %lu markers", markers.size());
+        tracker->lockMarkers();     // lock the tracked markers, because they might get updated in a different thread
         
         // draw each marker
-        for (vector<ocv_ar::Marker *>::const_iterator it = markers.begin();
-             it != markers.end();
+        const ocv_ar::MarkerMap *markers = tracker->getMarkers();
+        for (ocv_ar::MarkerMap::const_iterator it = markers->begin();
+             it != markers->end();
              ++it)
         {
-            [self drawMarker:(*it)];
+            [self drawMarker:&(it->second)];
         }
+        
+        tracker->unlockMarkers();   // unlock the tracked markers again
     }
 }
 
@@ -134,6 +146,10 @@ const GLfloat quadVertices[] = {
 
 #pragma mark public methods
 
+- (void)render:(CADisplayLink *)displayLink {
+    [self display];
+}
+
 - (void)setMarkerScale:(float)s {
     markerScale = s;
     
@@ -147,31 +163,31 @@ const GLfloat quadVertices[] = {
 
 #pragma mark private methods
 
-- (void)drawMarker:(ocv_ar::Marker *)marker {
-	// set matrixes
-	glUniformMatrix4fv(shMarkerProjMat, 1, false, markerProjMat);
-	glUniformMatrix4fv(shMarkerModelViewMat, 1, false, marker->getPoseMatPtr());
+- (void)drawMarker:(const ocv_ar::Marker *)marker {
+    // set matrixes
+    glUniformMatrix4fv(shMarkerProjMat, 1, false, markerProjMat);
+    glUniformMatrix4fv(shMarkerModelViewMat, 1, false, marker->getPoseMatPtr());
     glUniformMatrix4fv(shMarkerTransformMat, 1, false, markerScaleMat);
     
     int id = marker->getId();
     float idR = (float) ((id * id) % 1024);
     float idG = (float) ((id * id * id) % 1024);
     float idB = (float) ((id * id * id * id) % 1024);
-
-    float markerColor[] = { idR / 1024.0f,
-                            idG / 1024.0f,
-                            idB / 1024.0f,
-                            0.75f };
-	glUniform4fv(shMarkerColor, 1, markerColor);
     
-	// set geometry
-	glEnableVertexAttribArray(shAttrPos);
-	glVertexAttribPointer(shAttrPos,
-						  QUAD_COORDS_PER_VERTEX,
-						  GL_FLOAT,
-						  GL_FALSE,
-						  0,
-						  quadVertices);
+    float markerColor[] = { idR / 1024.0f,
+        idG / 1024.0f,
+        idB / 1024.0f,
+        0.75f };
+    glUniform4fv(shMarkerColor, 1, markerColor);
+    
+    // set geometry
+    glEnableVertexAttribArray(shAttrPos);
+    glVertexAttribPointer(shAttrPos,
+                          QUAD_COORDS_PER_VERTEX,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          0,
+                          quadVertices);
     
     // draw
     glDrawArrays(GL_TRIANGLE_STRIP, 0, QUAD_VERTICES);
