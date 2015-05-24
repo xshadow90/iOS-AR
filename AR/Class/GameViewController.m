@@ -110,9 +110,8 @@ void printFloatMat4x4(const float *m) {
             NSLog(@"%@: no camera intrinsics available for this model!", TAG);
             machineModelVersion = 3;    // default. might not work!
         }
-        // TODO: BUG
-        //camIntrinsicsFile = [NSString stringWithFormat:@"ipad%d-front.xml", machineModelVersion];
-        camIntrinsicsFile = @"ipad3-front.xml";
+        
+        camIntrinsicsFile = [[NSString alloc]initWithFormat:@"ipad%d-back.xml", machineModelVersion];
         
         useDistCoeff = USE_DIST_COEFF;
         
@@ -170,6 +169,8 @@ void printFloatMat4x4(const float *m) {
     
     // create the image view for the camera frames
     camView = [[CamView alloc] initWithFrame:baseFrame];
+//    CGRect camFrame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height);
+//    camView = [[CamView alloc] initWithFrame:camFrame];
     [baseView addSubview:camView];
     
     // create view for processed frames
@@ -197,7 +198,7 @@ void printFloatMat4x4(const float *m) {
         [procOutputSelectBtn setTitle:[btnTitles objectAtIndex:btnIdx]
                              forState:UIControlStateNormal];
         int btnW = 120;
-        [procOutputSelectBtn setFrame:CGRectMake(10 + (btnW + 20) * btnIdx, 10, btnW, 35)];
+        [procOutputSelectBtn setFrame:CGRectMake(10 + 2*(btnW + 20) * btnIdx / 3, 10, btnW, 35)];
         [procOutputSelectBtn setOpaque:YES];
         [procOutputSelectBtn addTarget:self
                                 action:@selector(procOutputSelectBtnAction:)

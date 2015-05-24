@@ -14,7 +14,6 @@ static NSString *TAG = @"EntryViewController";
 @interface EntryViewController () {
     
     GameViewController *gameViewController;
-    UIWindow *gameWindow;
 }
 
 @end

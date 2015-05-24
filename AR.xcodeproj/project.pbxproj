@@ -13,6 +13,7 @@
 		384B8B3A1B1017980013AAB6 /* ipad2-front.xml in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B391B1017980013AAB6 /* ipad2-front.xml */; };
 		384B8B3E1B1029A10013AAB6 /* marker_f.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B3C1B1029A10013AAB6 /* marker_f.glsl */; };
 		384B8B3F1B1029A10013AAB6 /* marker_v.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 384B8B3D1B1029A10013AAB6 /* marker_v.glsl */; };
+		386C48871B128B3700662CBB /* ipad3-back.xml in Resources */ = {isa = PBXBuildFile; fileRef = 386C48861B128B3700662CBB /* ipad3-back.xml */; };
 		38BBAC861B070E7B0017954A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAC851B070E7B0017954A /* main.m */; };
 		38BBAC911B070E7B0017954A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC901B070E7B0017954A /* Images.xcassets */; };
 		38BBAC941B070E7B0017954A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BBAC921B070E7B0017954A /* LaunchScreen.xib */; };
@@ -67,6 +68,7 @@
 		384B8B391B1017980013AAB6 /* ipad2-front.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ipad2-front.xml"; sourceTree = "<group>"; };
 		384B8B3C1B1029A10013AAB6 /* marker_f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker_f.glsl; sourceTree = "<group>"; };
 		384B8B3D1B1029A10013AAB6 /* marker_v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker_v.glsl; sourceTree = "<group>"; };
+		386C48861B128B3700662CBB /* ipad3-back.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ipad3-back.xml"; sourceTree = "<group>"; };
 		38BBAC801B070E7B0017954A /* AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38BBAC841B070E7B0017954A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38BBAC851B070E7B0017954A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				38BBACE41B07108B0017954A /* ipad3-front.xml */,
+				386C48861B128B3700662CBB /* ipad3-back.xml */,
 				384B8B391B1017980013AAB6 /* ipad2-front.xml */,
 			);
 			path = "cam-intrinsics";
@@ -406,6 +409,7 @@
 				384B8B3E1B1029A10013AAB6 /* marker_f.glsl in Resources */,
 				38BBAC911B070E7B0017954A /* Images.xcassets in Resources */,
 				38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */,
+				386C48871B128B3700662CBB /* ipad3-back.xml in Resources */,
 				384B8B3A1B1017980013AAB6 /* ipad2-front.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
