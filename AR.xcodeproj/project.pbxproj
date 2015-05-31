@@ -46,6 +46,12 @@
 		38BBAD481B07C62E0017954A /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BBAD471B07C62E0017954A /* EntryViewController.m */; };
 		38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38C870761B08618A00256BE7 /* Storyboard.storyboard */; };
 		38C870841B08651400256BE7 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C870821B08651400256BE7 /* GameViewController.xib */; };
+		6A4E75F71B1A613300BD1ACE /* cube.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E75F51B1A613300BD1ACE /* cube.m */; };
+		6A4E75F81B1A613300BD1ACE /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A4E75F61B1A613300BD1ACE /* cube.png */; };
+		6AF10E441B1BAA8100B0801D /* CC3Foundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF10E3B1B1BAA8100B0801D /* CC3Foundation.m */; };
+		6AF10E451B1BAA8100B0801D /* CC3GLMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF10E3D1B1BAA8100B0801D /* CC3GLMatrix.m */; };
+		6AF10E461B1BAA8100B0801D /* CC3Kazmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 6AF10E3E1B1BAA8100B0801D /* CC3Kazmath.c */; };
+		6AF10E471B1BAA8100B0801D /* CC3Math.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF10E421B1BAA8100B0801D /* CC3Math.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +127,19 @@
 		38BBAD471B07C62E0017954A /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
 		38C870761B08618A00256BE7 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = AR/Storyboard.storyboard; sourceTree = "<group>"; };
 		38C870821B08651400256BE7 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
+		6A4E75F41B1A613300BD1ACE /* cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cube.h; path = AR/Resources/cube.h; sourceTree = SOURCE_ROOT; };
+		6A4E75F51B1A613300BD1ACE /* cube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cube.m; path = AR/Resources/cube.m; sourceTree = SOURCE_ROOT; };
+		6A4E75F61B1A613300BD1ACE /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cube.png; path = AR/Resources/cube.png; sourceTree = SOURCE_ROOT; };
+		6AF10E3A1B1BAA8100B0801D /* CC3Foundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CC3Foundation.h; path = AR/Libraries/Cocos3DMathLib/CC3Foundation.h; sourceTree = SOURCE_ROOT; };
+		6AF10E3B1B1BAA8100B0801D /* CC3Foundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CC3Foundation.m; path = AR/Libraries/Cocos3DMathLib/CC3Foundation.m; sourceTree = SOURCE_ROOT; };
+		6AF10E3C1B1BAA8100B0801D /* CC3GLMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CC3GLMatrix.h; path = AR/Libraries/Cocos3DMathLib/CC3GLMatrix.h; sourceTree = SOURCE_ROOT; };
+		6AF10E3D1B1BAA8100B0801D /* CC3GLMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CC3GLMatrix.m; path = AR/Libraries/Cocos3DMathLib/CC3GLMatrix.m; sourceTree = SOURCE_ROOT; };
+		6AF10E3E1B1BAA8100B0801D /* CC3Kazmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = CC3Kazmath.c; path = AR/Libraries/Cocos3DMathLib/CC3Kazmath.c; sourceTree = SOURCE_ROOT; };
+		6AF10E3F1B1BAA8100B0801D /* CC3Kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CC3Kazmath.h; path = AR/Libraries/Cocos3DMathLib/CC3Kazmath.h; sourceTree = SOURCE_ROOT; };
+		6AF10E401B1BAA8100B0801D /* CC3Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CC3Logging.h; path = AR/Libraries/Cocos3DMathLib/CC3Logging.h; sourceTree = SOURCE_ROOT; };
+		6AF10E411B1BAA8100B0801D /* CC3Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CC3Math.h; path = AR/Libraries/Cocos3DMathLib/CC3Math.h; sourceTree = SOURCE_ROOT; };
+		6AF10E421B1BAA8100B0801D /* CC3Math.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CC3Math.m; path = AR/Libraries/Cocos3DMathLib/CC3Math.m; sourceTree = SOURCE_ROOT; };
+		6AF10E431B1BAA8100B0801D /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccTypes.h; path = AR/Libraries/Cocos3DMathLib/ccTypes.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +244,7 @@
 		38BBACA91B0710300017954A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6AF10E481B1BAA8F00B0801D /* Libraries */,
 				38BBACAE1B0710300017954A /* helper */,
 				38BBACAA1B0710300017954A /* AppDelegate.h */,
 				38BBACAB1B0710300017954A /* AppDelegate.m */,
@@ -276,6 +296,9 @@
 		38BBACE21B07108B0017954A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6A4E75F41B1A613300BD1ACE /* cube.h */,
+				6A4E75F51B1A613300BD1ACE /* cube.m */,
+				6A4E75F61B1A613300BD1ACE /* cube.png */,
 				384B8B3B1B1029A10013AAB6 /* shaders */,
 				38BBACE31B07108B0017954A /* cam-intrinsics */,
 				38BBACE51B07108B0017954A /* InfoPlist.strings */,
@@ -318,6 +341,23 @@
 			);
 			name = ocv_ar;
 			path = AR/Libraries/ocv_ar;
+			sourceTree = "<group>";
+		};
+		6AF10E481B1BAA8F00B0801D /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				6AF10E3A1B1BAA8100B0801D /* CC3Foundation.h */,
+				6AF10E3B1B1BAA8100B0801D /* CC3Foundation.m */,
+				6AF10E3C1B1BAA8100B0801D /* CC3GLMatrix.h */,
+				6AF10E3D1B1BAA8100B0801D /* CC3GLMatrix.m */,
+				6AF10E3E1B1BAA8100B0801D /* CC3Kazmath.c */,
+				6AF10E3F1B1BAA8100B0801D /* CC3Kazmath.h */,
+				6AF10E401B1BAA8100B0801D /* CC3Logging.h */,
+				6AF10E411B1BAA8100B0801D /* CC3Math.h */,
+				6AF10E421B1BAA8100B0801D /* CC3Math.m */,
+				6AF10E431B1BAA8100B0801D /* ccTypes.h */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,6 +448,7 @@
 				38BBACE81B07108B0017954A /* ipad3-front.xml in Resources */,
 				384B8B3E1B1029A10013AAB6 /* marker_f.glsl in Resources */,
 				38BBAC911B070E7B0017954A /* Images.xcassets in Resources */,
+				6A4E75F81B1A613300BD1ACE /* cube.png in Resources */,
 				38C870771B08618A00256BE7 /* Storyboard.storyboard in Resources */,
 				386C48871B128B3700662CBB /* ipad3-back.xml in Resources */,
 				384B8B3A1B1017980013AAB6 /* ipad2-front.xml in Resources */,
@@ -428,7 +469,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF10E451B1BAA8100B0801D /* CC3GLMatrix.m in Sources */,
 				384B8B351B10158A0013AAB6 /* CamView.m in Sources */,
+				6AF10E461B1BAA8100B0801D /* CC3Kazmath.c in Sources */,
 				38BBAD3C1B0716950017954A /* detect.cpp in Sources */,
 				38BBAD3E1B0716950017954A /* ident_7x7.cpp in Sources */,
 				38BBACB71B0710300017954A /* AppDelegate.m in Sources */,
@@ -436,7 +479,9 @@
 				38BBAD451B0716950017954A /* track.cpp in Sources */,
 				38BBAD441B0716950017954A /* tools.cpp in Sources */,
 				38BBAD481B07C62E0017954A /* EntryViewController.m in Sources */,
+				6AF10E441B1BAA8100B0801D /* CC3Foundation.m in Sources */,
 				38BBAD431B0716950017954A /* threading.cpp in Sources */,
+				6AF10E471B1BAA8100B0801D /* CC3Math.m in Sources */,
 				38BBAC861B070E7B0017954A /* main.m in Sources */,
 				38BBACB91B0710300017954A /* shader.cpp in Sources */,
 				38BBAD3F1B0716950017954A /* ident_templ.cpp in Sources */,
@@ -444,6 +489,7 @@
 				38BBAD411B0716950017954A /* marker.cpp in Sources */,
 				38BBAD3D1B0716950017954A /* ident.cpp in Sources */,
 				384B8B321B10157E0013AAB6 /* GLView.m in Sources */,
+				6A4E75F71B1A613300BD1ACE /* cube.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,7 +23,7 @@ using namespace std;
  * GLView highlights the found markers according to their estimated 3D pose.
  * It sits above the camera frame view and is not opaque.
  */
-@interface GLView : GLKView {
+@interface GLView : UIView {
     BOOL glInitialized;
     
     Shader markerDispShader;    // marker display shader
@@ -38,6 +38,30 @@ using namespace std;
     CGSize viewportSize;        // real gl viewport size in pixels
     
     GLfloat markerScaleMat[16]; // global marker transform (scale) matrix
+    
+    // new
+    GLuint _cubeTexture;
+    GLuint _fishTexture;
+    GLuint _texCoordSlot;
+    GLuint _textureUniform;
+    
+    CAEAGLLayer* _eaglLayer;
+    EAGLContext* _context;
+    GLuint _colorRenderBuffer;
+    GLuint _positionSlot;
+    GLuint _colorSlot;
+    GLuint _projectionUniform;
+    GLuint _modelViewUniform;
+    float _currentRotation;
+    GLuint _depthRenderBuffer;
+    
+    GLuint _floorTexture;
+    GLuint _vertexBuffer;
+    GLuint _indexBuffer;
+    GLuint _vertexBuffer2;
+    GLuint _indexBuffer2;
+    
+    CADisplayLink *displayLink;
 }
 
 @property (nonatomic, assign) ocv_ar::Track *tracker;   // tracker object that handles marker tracking and motion interpolation
@@ -49,16 +73,16 @@ using namespace std;
  * set a marker scale <s> (real marker side length in meters)
  * overwrite 'assign' method
  */
-- (void)setMarkerScale:(float)s;
+//- (void)setMarkerScale:(float)s;
 
 /**
  * Resize the gl view and adjust gl properties
  */
-- (void)resizeView:(CGSize)size;
+//- (void)resizeView:(CGSize)size;
 
 /**
  * redraw the frame (will just call [self display])
  */
-- (void)render:(CADisplayLink *)displayLink;
+//- (void)render:(CADisplayLink *)displayLink;
 
 @end
